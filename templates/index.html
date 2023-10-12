@@ -32,11 +32,12 @@
             border-bottom: 5px solid #edf2f7;
         }
 
-        .middle-content {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px; /* Adjust gap as needed */
+            margin: 20px auto;
+            max-width: 1200px; /* Adjust max width as needed */
         }
 
         .plot-container {
@@ -56,22 +57,26 @@
         }
     </style>
 </head>
+
 <body>
     <div class="top-bar">
         Strava Data Visualization
     </div>
 
-    <div class="middle-content">
+    <div class="grid-container">
         <div class="plot-container">
+            {% for script, div, title in components %}
+            <h2>{{ title }}</h2>
+            {{ script | safe }}
             {{ div | safe }}
+            {% endfor %}
         </div>
     </div>
+
 
     <div class="bottom-bar">
         Built with ❤️ by Adrian
     </div>
-
-    {{ script | safe }}
 </body>
 
 </html>
