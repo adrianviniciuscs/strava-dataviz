@@ -1,15 +1,14 @@
 import requests
-import json
 import os
 
 
 def checkAPIKeys():
-
     with open('refresh_token.txt', 'r') as file:
         refresh_token = file.read().strip()
 
     client_id = os.environ.get('STRAVA_CID')
     client_secret = os.environ.get('STRAVA_SKEY')
+    
 
     url = 'https://www.strava.com/api/v3/oauth/token'         
     payload = {
@@ -23,7 +22,7 @@ def checkAPIKeys():
 
     if response.status_code == 200:
 
-        response_data = response.json()  
+        response_data = response.json()
 
         access_token = response_data['access_token']
         refresh_token = response_data['refresh_token']
@@ -59,7 +58,7 @@ def requestStravaAPI():
             tempData = response.json()
 
             if not tempData:
-                print("End ofpages!")
+                print("End of pages!")
                 break
 
             data.extend(tempData)
@@ -68,4 +67,6 @@ def requestStravaAPI():
         else:
             print(f"Error fetching activities. Status code:{response.status_code}")
             break
+
+    print(f"Quantidade de corridas carregadas: {len(data)}")
     return data
