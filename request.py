@@ -8,15 +8,19 @@ def checkAPIKeys():
 
     client_id = os.environ.get('STRAVA_CID')
     client_secret = os.environ.get('STRAVA_SKEY')
-    
+    print(client_id)
+    print(client_secret)
+    if not client_id or not client_secret:
+        raise EnvironmentError(
+            "STRAVA_CID and STRAVA_SKEY environment variables are not set")
 
-    url = 'https://www.strava.com/api/v3/oauth/token'         
+    url = 'https://www.strava.com/api/v3/oauth/token'
     payload = {
-            'client_id': client_id,
-            'client_secret': client_secret,
-            'grant_type': 'refresh_token',
-            'refresh_token': refresh_token
-            }
+        'client_id': client_id,
+        'client_secret': client_secret,
+        'grant_type': 'refresh_token',
+        'refresh_token': refresh_token
+    }
 
     response = requests.post(url, data=payload)
 
@@ -65,8 +69,9 @@ def requestStravaAPI():
             page += 1
             print(f'Parsed page n {page}')
         else:
-            print(f"Error fetching activities. Status code:{response.status_code}")
+            print(
+                f"Error fetching activities. Status code:{response.status_code}")
             break
 
-    print(f"Quantidade de corridas carregadas: {len(data)}")
+    print(f"Runs fetched: {len(data)}")
     return data

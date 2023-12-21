@@ -1,4 +1,2 @@
-response.txt
-refresh_token.txt
-token.txt
+*.txt
 
